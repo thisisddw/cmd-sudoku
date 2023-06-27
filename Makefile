@@ -21,6 +21,7 @@ test: $(BUILD_DIR)/$(TARGET_EXEC)
 	@$(BUILD_DIR)/$(TARGET_EXEC) $(ARGS)
 
 clean:
-	rm -r $(BUILD_DIR)/*
+	rm $(BUILD_DIR)/$(TARGET_EXEC)
+	rm -r $(BUILD_DIR)/*.o
 
 .PHONY: clean run
