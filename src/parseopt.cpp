@@ -22,7 +22,7 @@ void parse_options(int argc, char *argv[])
             break;
         case 's':
             arguments.flags |= Arguments::S_FLAG;
-            sscanf(optarg, "%s", arguments.input_file);
+            sscanf(optarg, "%100s", arguments.input_file);
             break;
         case 'n':
             arguments.flags |= Arguments::N_FLAG;
