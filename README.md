@@ -2,11 +2,13 @@
 
 ![options](img_v2_3d497d21-4027-4808-81ae-995b82b3533g.png)
 
+- 暂时只支持-c
+
 ## 注意事项
 
 - 用make编译
     - 目标可执行文件是build/shudu
-    - make test 直接运行可执行文件，没有参数
+    - make test 运行程序，例：make test ARGS="-c 2"
 
 
 - sudoku.h: 数独生成和求解的一系列代码
