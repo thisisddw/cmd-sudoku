@@ -10,6 +10,7 @@ OBJS := $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
 
 CXX := g++
 CPPFLAGS += -I$(INCLUDE_DIR)
+CXXFLAGS += -O2 -g -Wall
 
 $(BUILD_DIR)/$(TARGET_EXEC):$(OBJS)
 	@$(CXX) $(LDFLAGS) -o $@ $(OBJS)
@@ -21,7 +22,6 @@ test: $(BUILD_DIR)/$(TARGET_EXEC)
 	@$(BUILD_DIR)/$(TARGET_EXEC) $(ARGS)
 
 clean:
-	rm $(BUILD_DIR)/$(TARGET_EXEC)
-	rm -r $(BUILD_DIR)/*.o
+	@rm $(BUILD_DIR)/*.o $(BUILD_DIR)/$(TARGET_EXEC)
 
-.PHONY: clean run
+.PHONY: clean test

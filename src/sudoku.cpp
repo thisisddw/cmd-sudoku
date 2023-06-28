@@ -196,6 +196,8 @@ vector<Sudoku> generate_m(int n, int m)
         list = generate_r(n, 41, 60);
         break;
     default:
+        fprintf(stderr, "invalid level: %d", m);
+        exit(-1);
         break;
     }
     return list;

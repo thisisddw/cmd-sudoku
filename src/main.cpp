@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
         to_screen(&list);
         
-        to_file(&list, "../ending.txt");
+        to_file(&list, "./ending.txt");
     }
     else if(arguments.flags & Arguments::S_FLAG)
     {
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
                 // print to sudoku.txt
                 char *out_file = new char[100];
-                sprintf(out_file, "../sudoku%d.txt", sudo_num);
+                sprintf(out_file, "./sudoku%d.txt", sudo_num);
                 if(std::freopen(out_file, "w", stdout))
                 {
                     for(const auto &s: solve_list)
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 
             to_screen(&list);
         
-            to_file(&list, "../game.txt");
+            to_file(&list, "./game.txt");
         }
         else if(arguments.flags == (Arguments::M_FLAG | Arguments::N_FLAG))
         {
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 
             to_screen(&list);
         
-            to_file(&list, "../game.txt");
+            to_file(&list, "./game.txt");
         }
         else if(arguments.flags == (Arguments::R_FLAG | Arguments::N_FLAG))
         {
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 
             to_screen(&list);
         
-            to_file(&list, "../game.txt");
+            to_file(&list, "./game.txt");
         }
         else if(arguments.flags == (Arguments::U_FLAG | Arguments::N_FLAG))
         {
@@ -108,16 +108,19 @@ int main(int argc, char *argv[])
 
             // timeBegin = time(NULL);
         
-            to_file(&list, "../game.txt");
+            to_file(&list, "./game.txt");
 
             // timeEnd = time(NULL);
             // printf("to file: %d seconds\n", timeEnd - timeBegin);
         }
+        else
+            goto ARG_ERR;
     }
     else
     {
         goto ARG_ERR;
     }
+
     return 0;
 
 ARG_ERR:

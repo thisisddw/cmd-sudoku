@@ -8,7 +8,6 @@ Arguments arguments;
 void parse_options(int argc, char *argv[])
 {
     extern char *optarg;
-    extern int optopt;
     extern int optind;
     char opt;
     memset(&arguments, 0, sizeof(Arguments));
