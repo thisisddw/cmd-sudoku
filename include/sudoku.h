@@ -22,6 +22,7 @@ public:
     int *operator [](const int row) const { return (int *)data[row]; }
     int get(int x, int y) const { check_range(x, y); return data[x][y]; }
     void set(int x, int y, int val) { check_range(x, y); check_val(val); data[x][y] = val; }
+    bool read_sudo();
 
     bool is_valid() const;
     int count() const;

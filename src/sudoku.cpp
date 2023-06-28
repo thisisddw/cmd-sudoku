@@ -69,6 +69,31 @@ std::string Sudoku::to_pretty_string() const
     return std::string(buf);
 }
 
+bool Sudoku::read_sudo()
+{
+    char sudo_char;
+    for(int i = 0; i < 9; i++)
+    {
+        for(int j = 0; j < 9; j++)
+        {
+            sudo_char = std::getchar();
+            if((sudo_char <= '9' && sudo_char >= '1') || sudo_char == '$')
+            {
+                if(sudo_char == '$')
+                    data[i][j] = 0;
+                else
+                    data[i][j] = sudo_char - '0';
+                
+            }
+            else
+                return 0;
+        }
+        std::getchar();
+    }
+    std::getchar();
+    return 1;
+}
+
 void get_stats(const Sudoku &s)
 {
     if(!s.is_valid())
