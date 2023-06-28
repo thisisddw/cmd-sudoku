@@ -181,6 +181,26 @@ vector<Sudoku> generate_n(int n)
     return generate_r(n, 20, 50);
 }
 
+vector<Sudoku> generate_m(int n, int m)
+{
+    vector<Sudoku> list;
+    switch (m)
+    {
+    case 1:
+        list = generate_r(n, 1, 20);
+        break;
+    case 2:
+        list = generate_r(n, 21, 40);
+        break;
+    case 3:
+        list = generate_r(n, 41, 60);
+        break;
+    default:
+        break;
+    }
+    return list;
+}
+
 vector<Sudoku> generate_r(int n, int r1, int r2)
 {
     assert(r1 <= r2);
@@ -189,4 +209,23 @@ vector<Sudoku> generate_r(int n, int r1, int r2)
     for(int i = 0; i < n; i++)
         s_list[i] = drop_r(s_list[i], r1 + rand() % (r2 - r1 + 1));
     return s_list;
+}
+
+vector<Sudoku> generate_u(int n)
+{
+    vector<Sudoku> uniq_sudokus;
+    for(int i = 0; i < n; i++)
+    {
+        int drops = 54;
+        auto list = generate_r(1, drops, drops + 10);
+        auto s_list = solve(list[0], 2);
+        while (s_list.size() > 1)
+        {
+            drops = std::max(drops - 2, 12);
+            list = generate_r(1, drops, drops + 10);
+            s_list = solve(list[0], 2);
+        }
+        uniq_sudokus.push_back(list[0]);
+    }
+    return uniq_sudokus;
 }

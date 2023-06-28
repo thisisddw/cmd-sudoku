@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
-#include "sudoku.h"
 #include "parseopt.h"
+#include "myio.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,22 +18,11 @@ int main(int argc, char *argv[])
 
         auto list = generate_c(arguments.number);
 
-        // print to screen
-        for(const auto &s: list)
-            printf("%s\n", s.to_pretty_string().c_str());
-        // print to ending.txt
-        if(std::freopen("../ending.txt", "w", stdout)) 
-        {
-            for(const auto &s: list)
-                std::printf("%s\n", s.to_string().c_str());
-            std::fclose(stdout);
-        }
-        else
-        {
-            printf("print to file error!\n");
-        }
+        to_screen(&list);
+        
+        to_file(&list, "../ending.txt");
     }
-    if(arguments.flags & Arguments::S_FLAG)
+    else if(arguments.flags & Arguments::S_FLAG)
     {
         if(arguments.flags != Arguments::S_FLAG)
             goto ARG_ERR;
@@ -76,31 +65,59 @@ int main(int argc, char *argv[])
         }
         
     }
-    if(arguments.flags & Arguments::N_FLAG)
+    else if(arguments.flags & Arguments::N_FLAG)
     {
         if(arguments.flags == Arguments::N_FLAG)
         {
             auto list = generate_n(arguments.number);
 
-            // print to screen
-            for(const auto &s: list)
-                printf("%s\n", s.to_pretty_string().c_str());
+            to_screen(&list);
+        
+            to_file(&list, "../game.txt");
+        }
+        else if(arguments.flags == (Arguments::M_FLAG | Arguments::N_FLAG))
+        {
+            if(arguments.level < 1 || arguments.level > 3)
+                goto ARG_ERR;
+
+            auto list = generate_m(arguments.number, arguments.level);
+
+            to_screen(&list);
+        
+            to_file(&list, "../game.txt");
+        }
+        else if(arguments.flags == (Arguments::R_FLAG | Arguments::N_FLAG))
+        {
+            auto list = generate_r(arguments.number, arguments.r1, arguments.r2);
+
+            to_screen(&list);
+        
+            to_file(&list, "../game.txt");
+        }
+        else if(arguments.flags == (Arguments::U_FLAG | Arguments::N_FLAG))
+        {
+            // time_t timeBegin, timeEnd;
+            // timeBegin = time(NULL);
             
-            // print to game.txt
-            if(std::freopen("../game.txt", "w", stdout)) 
-            {
-                for(const auto &s: list)
-                    std::printf("%s\n", s.to_string().c_str());
-                std::fclose(stdout);
-            }
-            else
-            {
-                printf("print to file error!\n");
-            }
+            auto list = generate_u(arguments.number);
+
+            // timeEnd = time(NULL);
+            // printf("culculate: %d seconds\n", timeEnd - timeBegin);
+
+            to_screen(&list);
+
+            // timeBegin = time(NULL);
+        
+            to_file(&list, "../game.txt");
+
+            // timeEnd = time(NULL);
+            // printf("to file: %d seconds\n", timeEnd - timeBegin);
         }
     }
-
-
+    else
+    {
+        goto ARG_ERR;
+    }
     return 0;
 
 ARG_ERR:
