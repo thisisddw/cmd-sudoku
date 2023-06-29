@@ -11,6 +11,8 @@ OBJS := $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
 CXX := g++
 CPPFLAGS += -I$(INCLUDE_DIR)
 CXXFLAGS += -O2 -g -Wall
+# CXXFLAGS += -fprofile-arcs -ftest-coverage
+# LDFLAGS += -lgcov --coverage
 
 $(BUILD_DIR)/$(TARGET_EXEC):$(OBJS)
 	@$(CXX) $(LDFLAGS) -o $@ $(OBJS)
