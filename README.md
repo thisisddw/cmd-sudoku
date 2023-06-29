@@ -103,6 +103,13 @@ make clean
 ````
 - 然后运行make命令重新编译
 
+## Unit Tests
+**需要安装google-test和gcov**
+
+进入test目录，然后执行以下步骤：
+- make sync # 同步代码
+- make test # 单元测试
+- make gcov # 查看测试代码覆盖率
 
 
 ## Quick Start (developer version)
@@ -132,9 +139,3 @@ make clean
     - Sudoku::to_string产生朴素字符串，可用于文件读写
     - Sudoku::to_pretty_string产生高可读性的字符串
     - 其余请看注释
-
-## TODO
-
-- generate_m和generate_u
-- 解析参数
-- 文件读写

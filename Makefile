@@ -11,11 +11,9 @@ OBJS := $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
 CXX := g++
 CPPFLAGS += -I$(INCLUDE_DIR)
 CXXFLAGS += -O2 -g -Wall
-# CXXFLAGS += -fprofile-arcs -ftest-coverage
-# LDFLAGS += -lgcov --coverage
 
 $(BUILD_DIR)/$(TARGET_EXEC):$(OBJS)
-	@$(CXX) $(LDFLAGS) -o $@ $(OBJS)
+	@$(CXX) $(LDFLAGS) $(OBJS) -o $@
 
 $(BUILD_DIR)/%.o:$(SRC_DIR)/%.cpp
 	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
@@ -24,6 +22,7 @@ test: $(BUILD_DIR)/$(TARGET_EXEC)
 	@$(BUILD_DIR)/$(TARGET_EXEC) $(ARGS)
 
 clean:
-	@rm $(BUILD_DIR)/*.o $(BUILD_DIR)/$(TARGET_EXEC)
+	-@rm $(BUILD_DIR)/*.o $(BUILD_DIR)/$(TARGET_EXEC)
+	@cd test && make clean
 
 .PHONY: clean test

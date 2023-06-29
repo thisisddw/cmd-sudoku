@@ -135,5 +135,5 @@ int main(int argc, char *argv[])
 
 ARG_ERR:
     fprintf(stderr, "Wrong arguments\n");
-    return -1;
+    exit(-1);
 }
