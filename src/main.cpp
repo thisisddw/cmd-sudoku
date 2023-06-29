@@ -11,6 +11,20 @@ int main(int argc, char *argv[])
 
     srand(time(NULL));
 
+    char out_file[128] = "../game.txt";
+    if(arguments.flags & Arguments::O_FLAG)
+    {
+        memccpy(out_file, arguments.output_file, 0, sizeof(out_file));
+        arguments.flags ^= Arguments::O_FLAG;
+    }
+
+    bool screen = 1;
+    if(arguments.flags & Arguments::X_FLAG)
+    {
+        screen = 0;
+        arguments.flags ^= Arguments::X_FLAG;
+    }
+
     if(arguments.flags & Arguments::C_FLAG)
     {
         if (arguments.flags != Arguments::C_FLAG)
@@ -18,9 +32,10 @@ int main(int argc, char *argv[])
 
         auto list = generate_c(arguments.number);
 
-        to_screen(&list);
+        if(screen)
+            to_screen(&list);
         
-        to_file(&list, "./ending.txt");
+        to_file(&list, out_file);
     }
     else if(arguments.flags & Arguments::S_FLAG)
     {
@@ -34,17 +49,19 @@ int main(int argc, char *argv[])
             while (sudo.read_sudo())
             {
                 sudo_num ++;
-                auto solve_list = solve(sudo, 10);
+                auto solve_list = solve(sudo, 100);
 
                 // print to screen
-                printf("the %dth game:\n", sudo_num);
-                for(const auto &s: solve_list)
-                    printf("%s\n", s.to_pretty_string().c_str());
-                printf("\n\n");
-
+                if(screen)
+                {
+                    printf("the %dth game:\n", sudo_num);
+                    for(const auto &s: solve_list)
+                        printf("%s\n", s.to_pretty_string().c_str());
+                    printf("\n\n");
+                }
                 // print to sudoku.txt
                 char *out_file = new char[100];
-                sprintf(out_file, "./sudoku%d.txt", sudo_num);
+                sprintf(out_file, "../sudoku%d.txt", sudo_num);
                 if(std::freopen(out_file, "w", stdout))
                 {
                     for(const auto &s: solve_list)
@@ -71,9 +88,10 @@ int main(int argc, char *argv[])
         {
             auto list = generate_n(arguments.number);
 
-            to_screen(&list);
+            if(screen)
+                to_screen(&list);
         
-            to_file(&list, "./game.txt");
+            to_file(&list, out_file);
         }
         else if(arguments.flags == (Arguments::M_FLAG | Arguments::N_FLAG))
         {
@@ -82,36 +100,28 @@ int main(int argc, char *argv[])
 
             auto list = generate_m(arguments.number, arguments.level);
 
-            to_screen(&list);
+            if(screen)
+                to_screen(&list);
         
-            to_file(&list, "./game.txt");
+            to_file(&list, out_file);
         }
         else if(arguments.flags == (Arguments::R_FLAG | Arguments::N_FLAG))
         {
             auto list = generate_r(arguments.number, arguments.r1, arguments.r2);
 
-            to_screen(&list);
+            if(screen)
+                to_screen(&list);
         
-            to_file(&list, "./game.txt");
+            to_file(&list, out_file);
         }
         else if(arguments.flags == (Arguments::U_FLAG | Arguments::N_FLAG))
         {
-            // time_t timeBegin, timeEnd;
-            // timeBegin = time(NULL);
-            
             auto list = generate_u(arguments.number);
 
-            // timeEnd = time(NULL);
-            // printf("culculate: %d seconds\n", timeEnd - timeBegin);
-
-            to_screen(&list);
-
-            // timeBegin = time(NULL);
+            if(screen)
+                to_screen(&list);
         
-            to_file(&list, "./game.txt");
-
-            // timeEnd = time(NULL);
-            // printf("to file: %d seconds\n", timeEnd - timeBegin);
+            to_file(&list, out_file);
         }
         else
             goto ARG_ERR;

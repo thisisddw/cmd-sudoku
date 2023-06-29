@@ -12,7 +12,7 @@ void parse_options(int argc, char *argv[])
     char opt;
     memset(&arguments, 0, sizeof(Arguments));
 
-    while((opt = getopt(argc, argv, "c:s:n:m:r:u")) != -1)
+    while((opt = getopt(argc, argv, "c:s:n:m:r:o:ux")) != -1)
     {
         switch (opt)
         {
@@ -38,6 +38,13 @@ void parse_options(int argc, char *argv[])
             break;
         case 'u':
             arguments.flags |= Arguments::U_FLAG;
+            break;
+        case 'o':
+            arguments.flags |= Arguments::O_FLAG;
+            sscanf(optarg, "%100s", arguments.output_file);
+            break;
+        case 'x':
+            arguments.flags |= Arguments::X_FLAG;
             break;
         case '?':
         default:
