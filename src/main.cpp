@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
     srand(time(NULL));
 
-    char out_file[128] = "../game.txt";
+    char out_file[128] = "./game.txt";
     if(arguments.flags & Arguments::O_FLAG)
     {
         memccpy(out_file, arguments.output_file, 0, sizeof(out_file));
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
                 }
                 // print to sudoku.txt
                 char *out_file = new char[100];
-                sprintf(out_file, "../sudoku%d.txt", sudo_num);
+                sprintf(out_file, "./sudoku%d.txt", sudo_num);
                 if(std::freopen(out_file, "w", stdout))
                 {
                     for(const auto &s: solve_list)
