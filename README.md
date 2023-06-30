@@ -45,7 +45,7 @@ shudu.exe -n [number] -m [level]
 &nbsp;
 
 ````
-shudu.exe -n [number] -r [number1] [number2]
+shudu.exe -n [number] -r [number1]~[number2]
 ````
 
 - 使用以下命令从指定路径的文件中读取数独游戏并给出解答，您需要将 *path* 替换为您存储数独游戏的文件路径。
